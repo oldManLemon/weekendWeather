@@ -7,7 +7,7 @@ A simple online tool to answer the commonly asked question "What's the weather t
 
  - React
  - HTML Geolocation API
- - BOM Rest API
+ - AccuWeather API (BOM's no native Rest API)
  - Typescript
  - VS Code
  
