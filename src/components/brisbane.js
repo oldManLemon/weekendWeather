@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import { WeatherService } from "../WeatherService";
 
 class Brisbane extends Component {
 
@@ -10,31 +11,19 @@ class Brisbane extends Component {
             title: 'Brisbane Test',
             data: null
         };
+
+        this.weatherService = new WeatherService();
     }
 
-    getMeData(){
-        return fetch('http://api.apixu.com/v1/forecast.json?key=69e03ca47c2d4a998f593024181807&q=Brisbane&days=7')
-            .then(res => res.json())
-    }
-
-    /**
-     * 
-     * 
-     * @param {Forecast.RootObject} data 
-     */
-    handleData(data)
-    {
-        this.setState({title: this.title, data});
+    handleData(data) {
+        this.setState({ title: this.title, data });
         console.log(data);
     }
 
-
     componentDidMount() {
-
-        this.getMeData()
-        .then(data => this.handleData(data))
-        .catch(e => this.handleError(e));
-
+        this.weatherService.getData()
+            .then(data => this.handleData(data))
+            .catch(e => this.handleError(e));
     }
 
     handleError(error) {
@@ -46,7 +35,7 @@ class Brisbane extends Component {
         /** @type {Forecast.RootObject|null} */
         var payload = this.state.data;
 
-        if(payload == null){
+        if (payload == null) {
             return (<p>Loading...</p>);
         }
 
@@ -58,7 +47,7 @@ class Brisbane extends Component {
                 <h1>Forecasts</h1>
                 <p>
                     <ul>
-                    {payload.forecast.forecastday.map(fd => (<li>{fd.day.avgtemp_c}</li>))}
+                        {payload.forecast.forecastday.map(fd => (<li>{fd.day.avgtemp_c}</li>))}
                     </ul>
                 </p>
             </div>
